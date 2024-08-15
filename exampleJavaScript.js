@@ -85,4 +85,12 @@ let newUser = {
     bio: ""
 }
 
-console.log()
+console.log("Saving newUser to Database, doing all pre-save checks now...");
+
+let userToSave = {
+    username: newUser.username,
+    bio: newUser.bio || "Default bio here"
+}
+
+console.log("Pretend we've written this to the database");
+console.log(userToSave);
