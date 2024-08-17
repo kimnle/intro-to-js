@@ -4,10 +4,13 @@ console.log("Dice roller file loaded");
 console.log(rollDice(20));
 
 // Not a closure, because rollD20 is a const variable
-console.log(rollD20());
+// console.log(rollD20());
 
-// Function that rolls a dice
-// generic dice roller function
+/**
+ * Function that rolls a dice and the dice size is a parameter
+ * @param {number} diceSize Size of the dice. This is the maximum number can you can roll.
+ * @returns {number}
+ */
 function rollDice(diceSize = 6) {
     console.log("Dice rolling function has been called with a dice size of " + diceSize);
 
@@ -32,12 +35,22 @@ function rollDice(diceSize = 6) {
 
 // Function that rolls a dice and the dice is a 6-sided dice
 // specific dice roller function that calls the generic function
+
+/**
+ * Function that rolls a dice is a 6-sided dice
+ * @returns {number}
+ */
 const rollD6 = () => rollDice(6);
 
 console.log("RollD6 function result is: " + rollD6());
 
 // Function that rolls a dice and the dice is a 20-sided dice
 // specific dice roller function that calls the generic function
+
+/**
+ * Function that rolls a dice is a 20-sided dice
+ * @returns {number}
+ */
 const rollD20 = () => {
     // let diceResult = rollDice(20);
     // return diceResult;
@@ -54,6 +67,10 @@ let diceResults;
 
 // let, var, const
 
+/**
+ * Roll two dice and return the highest result.
+ * @returns {number}
+ */
 function rollD20WithAdvantage() {
     let tempDiceResults = [
         rollD20(),
@@ -84,5 +101,34 @@ var diceResultChangeable = rollD20();
 diceResultChangeable = rollD20();
 
 // const cannot be changed after declaration
-const diceResultChangeable = rollD20();
-diceResultChangeable = rollD20();
+// const diceResultChangeable = rollD20();
+// diceResultChangeable = rollD20();
+
+const diceRollerSystem = {
+    rollDice: rollDice,
+    rollD20: rollD20,
+    rollD6: rollD6,
+    rollTwentySided: rollD20,
+    advantageD20: rollD20WithAdvantage,
+    nestedStuff: {
+        nestedRollD20: rollD20,
+        someNestedFunction: () => {
+            console.log(this.nestedRollD20());
+            console.log("hello from a function inside a nested object");
+        },
+        someNestedGoodFunction: function() {
+            console.log(this.nestedRollD20());
+            console.log("Hello from the good nested function");
+        }
+    }
+}
+
+//                                                          object.propertyVariable
+//                                                          object.propertyFunction()
+console.log("Rolling D20 with advantage and results is: " + diceRollerSystem.advantageD20());
+
+console.log(this);
+console.log(diceRollerSystem.nestedStuff.someNestedGoodFunction());
+// console.log(diceRollerSystem.nestedStuff.someNestedFunction());
+console.log(Object.keys(diceRollerSystem));
+console.log(Object.keys(diceRollerSystem.nestedStuff))
